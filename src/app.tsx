@@ -56,7 +56,7 @@ const issues = [
 
 export function App() {
   const [currentIssueIndex, setCurrentIssueIndex] = useState(0);
-  const [animate, setAnimate] = useState(true);
+  const [animate, setAnimate] = useState(false);
 
   const animateTransition = () => {
     setAnimate(true);
@@ -65,19 +65,21 @@ export function App() {
     }, 800);
   };
   const moveToNextIssue = () => {
-    animateTransition();
-    setTimeout(() => {
-      setCurrentIssueIndex((prev) =>
-        prev === issues.length ? prev : prev + 1
-      );
-    }, 200);
+    setCurrentIssueIndex((prev) => {
+      if (prev !== issues.length - 1) {
+        animateTransition();
+      }
+      return prev === issues.length - 1 ? prev : prev + 1;
+    });
   };
 
   const moveToPrevIssue = () => {
-    animateTransition();
-    setTimeout(() => {
-      setCurrentIssueIndex((prev) => (prev === 0 ? 0 : prev - 1));
-    }, 200);
+    setCurrentIssueIndex((prev) => {
+      if (prev !== 0) {
+        animateTransition();
+      }
+      return prev === 0 ? prev : prev - 1;
+    });
   };
 
   const handleKeyDown = (ev: KeyboardEvent) => {
@@ -111,7 +113,6 @@ export function App() {
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("wheel", handleScroll, { passive: false });
-    setTimeout(() => setAnimate(false), 1000);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("wheel", handleScroll);
