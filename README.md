@@ -1,3 +1,5 @@
-# Flighty Mango
+# Cordial Conversations
 
-Preact + Vite + Eslint + Prettier + TailwindCSS
+Online Magazine Showcase
+
+Demo: https://cordial-conversations.surge.sh/
